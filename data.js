@@ -93,4 +93,4 @@ C("遅れて来てごめんなさい。","Es tut mir leid, dass ich zu spät kom
 C("彼はすぐ帰ってくると思います。","Ich glaube, dass er gleich zurückkommt.")]}
 ];
 
-DATA.filter(d=>d.id=="pas"||d.id=="de").forEach(d=>d.items.forEach(x=>x.g=1));
+DATA.filter(d=>d.id=="pas"||d.id=="de"||d.id=="ja").forEach(d=>d.items.forEach(x=>x.g=1));

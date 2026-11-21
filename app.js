@@ -31,7 +31,7 @@ function home(){
   ${GROUPS.map(([t,ds])=>`<h2>${t}</h2>${ds.map(pick).join("")}`).join("")}
   <h2>設定</h2>
   <label class="pick"><input type="checkbox" id="wk" ${weakOnly?"checked":""}><span class="bx"></span><span class="nm">苦手な問題だけ出す<br><small class="m">間違えた問題が自動で記録されます（現在 ${nw} 問）</small></span></label>
-  <label class="pick"><input type="checkbox" id="ty" ${typing?"checked":""}><span class="bx"></span><span class="nm">入力モード<br><small class="m">独訳・書き換え・「違う語」系を文字入力で解答（ä→ae, ß→ss でもOK）</small></span></label>
+  <label class="pick"><input type="checkbox" id="ty" ${typing?"checked":""}><span class="bx"></span><span class="nm">入力モード<br><small class="m">和訳・独訳・書き換え・「違う語」系を文字入力で解答（ä→ae, ß→ss でもOK）</small></span></label>
   <div class="dock"><button class="p" id="go"></button></div>`;
   const upd=()=>{const n=pool().length,b=g("go");b.textContent=n?`スタート（${n}問）`:"出題できる問題がありません";b.disabled=!n};
   $.querySelectorAll("[data-id]").forEach(c=>c.onchange=()=>{c.checked?sel.add(c.dataset.id):sel.delete(c.dataset.id);upd()});
@@ -54,7 +54,7 @@ function show(){
   const x=Q[i],ty=typing&&((x.t==="c"&&!x.nt)||x.g);
   $.className="";window.scrollTo(0,0);
   let h=`<div class="top"><button class="ghost" id="hm">✕ やめる</button><span class="m"><b>${i+1}</b> / ${Q.length}　正解 ${i-wrong.length}</span></div><div class="bar" style="margin-top:10px"><i style="width:${i/Q.length*100}%"></i></div><div class="card"><span class="chip">${esc(x.cat)}</span><div class="q">${fm(x.q)}</div>`;
-  if(ty)h+=`${x.t==="c"?'<p class="m" style="margin:10px 0 0">'+x.o.map(fm).join(" / ")+"</p>":""}<div class="opts"><textarea id="in" rows="${x.g?3:1}" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="${x.t==="c"?"該当する語を入力":"ドイツ語で入力"}"></textarea></div><div class="chars">${["ä","ö","ü","ß"].map(c=>`<button type="button" data-c="${c}">${c}</button>`).join("")}</div><div class="row"><button class="p" id="chk">答え合わせ</button></div>`;
+  if(ty)h+=`${x.t==="c"?'<p class="m" style="margin:10px 0 0">'+x.o.map(fm).join(" / ")+"</p>":""}<div class="opts"><textarea id="in" rows="${x.g?3:1}" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="${x.t==="c"?"該当する語を入力":x.cat==="和訳（独→日）"?"日本語で入力":"ドイツ語で入力"}"></textarea></div><div class="chars">${["ä","ö","ü","ß"].map(c=>`<button type="button" data-c="${c}">${c}</button>`).join("")}</div><div class="row"><button class="p" id="chk">答え合わせ</button></div>`;
   else if(x.t==="c"){const c=x.o.length===8?"g4":x.o.length%2===0&&x.o.every(o=>o.length<=14)?"g2":"";h+=`<div class="opts ${c}">${shuf(x.o).map(o=>`<button data-o="${esc(o)}">${fm(o)}</button>`).join("")}</div>`}
   else h+=`<div class="row"><button class="p" id="rv">答えを見る</button></div>`;
   $.innerHTML=h+`</div>`;
@@ -74,7 +74,7 @@ function show(){
     g("ng").onclick=()=>{rec(false);i++;show()};
     g("ok").scrollIntoView({block:"nearest",behavior:"smooth"});};
 }
-const nz=s=>s.replace(/[【】]/g,"").replace(/[（(].*?[）)]/g,"").replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss").replace(/[―—–]/g,"-").replace(/[.,?!„“"]/g,"").replace(/\s*-\s*/g,"-").replace(/\s+/g," ").trim();
+const nz=s=>s.replace(/[【】]/g," ").replace(/[（(].*?[）)]/g," ").replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss").replace(/[―—–]/g,"-").replace(/[.,?!„“"、。！？「」『』]/g," ").replace(/\s*-\s*/g,"-").replace(/\s+/g," ").trim();
 function setupTy(x){
   const inp=g("in");inp.focus();
   $.querySelectorAll("[data-c]").forEach(b=>{b.onpointerdown=b.onmousedown=e=>e.preventDefault();b.onclick=()=>{inp.setRangeText(b.dataset.c,inp.selectionStart,inp.selectionEnd,"end");inp.focus()}});
