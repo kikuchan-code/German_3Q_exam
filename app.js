@@ -74,7 +74,7 @@ function show(){
     g("ng").onclick=()=>{rec(false);i++;show()};
     g("ok").scrollIntoView({block:"nearest",behavior:"smooth"});};
 }
-const nz=s=>s.replace(/[【】]/g," ").replace(/[（(].*?[）)]/g," ").replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss").replace(/[―—–]/g,"-").replace(/[.,?!„“"、。！？「」『』]/g," ").replace(/\s*-\s*/g,"-").replace(/\s+/g," ").trim();
+const nz=s=>s.replace(/[【】]/g,"").replace(/[（(].*?[）)]/g," ").replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/Ä/g,"Ae").replace(/Ö/g,"Oe").replace(/Ü/g,"Ue").replace(/ß/g,"ss").replace(/[―—–]/g,"-").replace(/[.,?!„“"、。！？「」『』]/g," ").replace(/\s*-\s*/g,"-").replace(/\s+/g," ").trim();
 function setupTy(x){
   const inp=g("in");inp.focus();
   $.querySelectorAll("[data-c]").forEach(b=>{b.onpointerdown=b.onmousedown=e=>e.preventDefault();b.onclick=()=>{inp.setRangeText(b.dataset.c,inp.selectionStart,inp.selectionEnd,"end");inp.focus()}});
