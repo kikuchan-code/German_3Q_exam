@@ -1,0 +1,24 @@
+{
+ "name": "ドイツ語 後期中間 対策クイズ",
+ "short_name": "独語クイズ",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "lang": "ja",
+ "background_color": "#eef5ff",
+ "theme_color": "#2f6fed",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
